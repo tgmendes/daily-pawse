@@ -1,0 +1,51 @@
+{{ $pawLogo := resources.Get "img/paw.svg" }}
+{{ $currentPage := . }}
+
+<header class="w-100 top-0 z-30 h-28">
+    <nav class="{{ if isset $currentPage.Params "coverimg" }}bg-opacity-0{{ end }} bg-blueteal-800 h-full">
+        <div class="mx-auto px-8 h-full px-20">
+            <div class="flex flex-row items-center justify-between h-full">
+                <div class="w-full justify-between flex items-center h-full">
+                    <a class="text-white font-medium py-2" href="/">
+                        <img class="h-16 inline-flex mr-1" src="/dp_logo_white.svg" alt="Workflow" />
+                    </a>
+                    <ul class="ml-10 flex items-baseline space-x-4">
+                        <li>
+                            <a class="{{ if $currentPage.IsHome }}text-doggo-500 border-b-2 border-doggo-500{{ else }}text-gray-300{{ end }}  mx-2 py-2 text-sm font-medium uppercase hover:text-doggo-500  duration-200"
+                                href="/">
+                                Home
+                            </a>
+                        </li>
+
+                        {{ range .Site.Menus.main }}
+                        <li class="relative pb-1 {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}text-doggo-500{{ else }}text-gray-300{{ end }}">
+                            <a class="py-2 text-sm font-medium uppercase {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}border-b-2 border-doggo-500{{ else }}text-gray-300{{ end }} hover:text-doggo-500 duration-200" href="{{ .URL }}">
+                                {{ .Name }}
+                            </a>
+                            {{ if .HasChildren }}
+                            <i class="ml-1 dropdown-btn cursor-pointer fa-solid fa-angle-down {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}text-doggo-500 {{ else }}text-gray-300{{ end }} hover:text-doggo-500  duration-200" onclick="toggleDropdown({{ .Name }})"></i>
+
+                            <div id="{{ .Name }}Dropdown" 
+                                class="nav-dropdown transition-all ease-in-out scale-50 opacity-0 origin-top-right absolute right-0 mt-3 w-56 rounded-md shadow-lg bg-slate-800 {{ if $currentPage.Params.heroCover }}bg-opacity-70{{ end }} ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden duration-200">
+                                <ul class="dropdown-content px-10 py-4 ">
+                                    {{ range .Children }}
+                                    <li class="text-center">
+                                        <a class="{{ if $currentPage.IsMenuCurrent "main" .}}font-bold text-doggo-500 {{else}}text-gray-300 font-medium{{ end }} text-center
+                                        text-sm uppercase hover:text-white" href="{{ .URL }}">
+                                            {{ .Name }}
+                                        </a>
+                                    </li>
+                                    {{ end }}
+
+                                </ul>
+                            </div>
+                            {{ end }}
+                        </li>
+                        
+                        {{ end }}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+{{- partial "head.html" . -}}
+
+<body>
+    {{- block "out-main" . }}{{- end }}
+    <div class="wrapper">
+        {{- partial "header.html" . -}}
+        {{- block "hero" . }}
+        
+        {{- end }}
+        <main id="content" class="grow mt-12 {{ if not .IsHome }}container mx-auto{{ end }}">
+            {{- block "main" . }}{{- end }}
+        </main>
+        {{- partial "footer.html" . -}}
+    </div>
+</body>
+</html>
+{{ $jsFiles := resources.Get "js/main.js" }}
+<script src="{{ $jsFiles.RelPermalink }}"></script>
+{{ block "page-script" . }}{{ end }}

@@ -1,0 +1,17 @@
+{{ $data := .}}
+<div class="flex flex-row h-auto">
+    {{ if eq $data.imgPosition "left" }}
+    <div class="basis-1/2">
+        <img src="{{ $data.featureImg.RelPermalink }}" alt="" class="w-full h-auto">
+    </div>
+    {{ end }}
+    <div class="basis-1/2 flex flex-col items-center text-center justify-center">
+        <h1 class="text-6xl font-thin mb-8 text-white">{{ $data.featureTitle }}</h1>
+        {{ partial "outline_button.html" (dict "href" $data.btnHref "text" "view" )}}
+    </div>
+    {{ if eq $data.imgPosition "right" }}
+    <div class="basis-1/2">
+        <img src="{{ $data.featureImg.RelPermalink }}" alt="" class="w-full h-auto">
+    </div>
+    {{ end }}
+</div>

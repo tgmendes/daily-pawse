@@ -1,0 +1,68 @@
+{{- define "out-main" -}}
+{{$resources := .Page.Resources}}
+<div id="imgModal" 
+    class="hidden fixed z-50 w-full h-full py-6 inset-0 overflow-y-auto bg-gray-900 bg-opacity-90 duration-500" 
+    aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <i class="text-white text-3xl absolute top-4 right-8 fa-solid fa-xmark cursor-pointer hover:text-slate-400 duration-300" onclick="closeModal()"></i>
+    <i class="text-white text-4xl absolute top-2/4 -mt-10 left-12 fa-solid fa-chevron-left cursor-pointer hover:text-slate-400 duration-300" 
+    onclick="nextSlide()"></i>
+    <i class="text-white text-4xl absolute top-2/4 -mt-10 right-12 fa-solid fa-chevron-right cursor-pointer hover:text-slate-400 duration-300" 
+    onclick="nextSlide()"></i>
+    <div class="relative mx-auto w-10/12">
+        {{ range $pageIdx, $pageData := .Pages }}
+        {{ with .Resources.ByType "image" }}
+        {{ range  $imgIdx, $imgData := . }}
+
+        <div class="modal-img-wrapper hidden flex flex-row justify-between gap-x-10 px-2" data-page-idx="{{ $pageIdx }}" data-img-idx="{{ $imgIdx }}">
+            <div class="flex">
+                <img class="modal-img mx-auto" 
+                    src="{{ $imgData.RelPermalink }}" 
+                    alt="{{ $pageData.Params.description }}">
+            </div>
+            <div class="flex flex-col grow justify-center">
+                <p class="text-xl text-white text-center font-bold mb-2">{{ $pageData.Params.title}}</p>
+                <p class="text-md text-white text-center mb-6">{{ $pageData.Params.description}}</p>
+                <div class="flex flex-row justify-center">
+                <a href="{{ $pageData.RelPermalink }}" class="inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-purple-600 to-blue-500 group-hover:from-purple-600 group-hover:to-blue-500 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800">
+                    <span class="px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
+                        More Info
+                    </span>
+                </a>
+                </div>
+            </div>
+        </div>
+        {{ end }}
+        {{ end }}
+        {{ end }}
+    </div>
+</div>
+{{- end -}}
+
+{{- define "hero" -}}
+{{ partial "hero.html" (dict "bgimg" .Params.coverImg  "title" .Params.coverTitle "subtitle" .Params.coverSubTitle "Kind" .Kind "height" "h-[400px]")}}
+{{- end -}}
+{{- define "main" -}}
+<div class="mb-12 text-center">
+    <h1 class="text-4xl text-center font-bold border-b-2 pb-4 mb-6">{{ .Params.Title }}</h1>
+
+    {{ .Content }}
+</div>
+<div class="grid grid-cols-3 gap-3">
+    {{ range $pageIdx, $pageData := .Pages }}
+    {{ with .Resources.ByType "image" }}
+    {{ range $imgIdx, $imgData := . }}
+    <div class="group flex flex-col justify-center hover:scale-105 duration-500">
+        {{ $image := $imgData.Fill "700x600"}}
+        <input type="image"
+            src="{{ $image.RelPermalink }}" 
+            class="thumbnail" 
+            onclick="openModal({{ $pageIdx }}, {{ $imgIdx }})"
+            data-original-src="{{ $imgData.RelPermalink }}"
+            alt="{{ $pageData.Params.description }}">
+
+    </div>
+    {{ end }}
+    {{ end }}
+    {{ end }}
+</div>
+{{ end }}

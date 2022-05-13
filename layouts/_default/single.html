@@ -1,0 +1,91 @@
+
+{{- define "main" -}}
+{{$resources := .Page.Resources}}
+
+<div class="flex flex-row">
+    <div class="basis-2/4">
+        {{ with .Page.Resources.GetMatch .Page.Params.featuredImg }}
+        <img src="{{ .RelPermalink }}" alt="" class="w-full"> 
+        {{ end }}
+    </div>
+    <div class="basis-2/4 px-12">
+        <div class="mb-6 text-center">
+            <h1 class="text-4xl text-center font-bold border-b-2 pb-4 mb-6">{{ .Params.Title }}</h1>
+        </div>
+        {{ with .Page.Resources.GetMatch .Page.Params.featuredImg }}
+            {{ with .Exif}}
+           
+            <ul class="grid grid-cols-2">
+                {{ with .Tags.Model }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons inline-flex mr-4">photo_camera</span> 
+                    <div>
+                        <p class="capitalize font-thin text-md">{{ . }}</p> 
+                    </div>
+                </li>
+                {{ end }}
+                {{ with .Tags.LensModel }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons material-symbols-outlined inline-flex mr-4 text-sm">lens</span> 
+                    <p class="font-thin text-sm">{{ . }}</p>  
+                </li>
+                {{ end }}
+                {{ with .Tags.ExposureTime }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons inline-flex mr-4">shutter_speed</span> 
+                    <p class="font-thin text-md">{{ . }}</p> 
+                </li>
+                {{ end }}
+                {{ with .Tags.FNumber }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons inline-flex mr-4">camera</span> 
+                    <p class="font-thin text-md">f/{{ . }}</p> 
+                </li>
+                {{ end }}
+                {{ with .Tags.FocalLength }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons inline-flex mr-4">arrow_back_ios</span> 
+                    <p class="font-thin text-md">{{ . }} mm</p> 
+                </li>
+                {{ end }}
+                {{ with .Tags.ISOSpeedRatings }}
+                <li class="flex flex-row-center align-center mb-2">
+                    <span class="material-icons inline-flex mr-4">camera_roll</span> 
+                    <p class="font-thin text-md">ISO{{ . }}</p> 
+                </li>
+                {{ end }}
+                
+              </ul>
+            {{ with .Date }}
+              <div class="flex flex-row-center align-center mt-8 mb-2">
+                  <span class="material-icons inline-flex mr-4">calendar_month</span> 
+                  <p class="font-thin text-md">{{ .Format "January 02, 2006" }}</p> 
+              </div>
+              {{ end }}
+            {{ end }}
+        {{ end }}
+        {{ with .Page.Params.location }}
+        <div class="flex flex-row-center align-center">
+            <span class="material-icons inline-flex mr-4">pin_drop</span> 
+            <p class="font-thin text-md">{{ . }}</p> 
+        </div>
+        {{ end }}
+    </div>
+
+</div>
+{{ with .Page.Content }}
+<div class="mt-20 text-center">
+    {{ . }}
+</div>
+{{ end }}
+{{ with .Resources.ByType "image" }}
+<div class="flex flex-col gap-6 mt-6">
+    {{ range . }}
+    <div>
+        <img src="{{ .RelPermalink }}" alt="">
+    </div>
+    {{ end }}
+</div>
+{{ end }}
+
+{{- end }}

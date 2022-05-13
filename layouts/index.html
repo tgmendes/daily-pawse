@@ -1,0 +1,50 @@
+{{- define "hero" -}}
+{{ partial "hero.html" (dict "bgimg" .Params.coverImg  "title" .Params.coverTitle "subtitle" .Params.coverSubTitle "Kind" .Kind)}}
+{{- end -}}
+
+{{- define "main" -}}
+<div class="container mx-auto mb-12 text-center">
+    <h1 class="uppercase text-4xl text-center border-b-2 pb-4 mb-6">The World from my Point of View</h1>
+
+    {{ .Content }}
+</div>
+
+
+<div class="bg-neutral-900 w-full mb-12">
+    {{ $covImg := resources.Get .Params.coverImg }}
+    {{ $currImgPos := "left" }}
+    {{ range $i, $page := .Site.Taxonomies.tags.ByCount }}
+        {{ $tagImg := newScratch}}
+        {{ range first 1 $page.Pages.ByWeight }}
+           {{ $tagImg.Set "resource" (.Resources.GetMatch .Params.featuredImg) }}
+        {{ end }}
+        {{ partial "big_section.html" (dict "featureImg" ($tagImg.Get "resource") "featureTitle" .Page.Title "imgPosition" $currImgPos "btnHref" $page.Page.RelPermalink)}}
+        {{ if eq $currImgPos "left" }}
+            {{ $currImgPos = "right" }}
+        {{ else }}
+            {{ $currImgPos = "left" }}
+        {{ end }}
+    {{ end }}
+</div>
+
+<div class="container mx-auto mb-12 text-center">
+    <h1 class="uppercase text-4xl text-center border-b-2 pb-4 mb-6">Some of my favourites</h1>
+    <div class="grid grid-cols-3 gap-4">
+    {{ range .Site.Taxonomies.categories.favorites }}
+        {{ $page := . }}
+        {{ with .Resources.ByType "image" }}
+        {{ range $imgIdx, $imgData := . }}
+        <div class="group flex flex-col justify-center">
+            {{ $image := $imgData.Fill "700x600"}}
+            <input type="image"
+                src="{{ $image.RelPermalink }}" 
+                class="thumbnail" 
+                data-original-src="{{ $imgData.RelPermalink }}">
+        </div>
+        {{ end }}
+        {{ end }}
+    {{ end }}
+    </div>
+</div>
+{{- end }}
+
