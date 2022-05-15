@@ -3,7 +3,7 @@
 {{- end -}}
 
 {{- define "main" -}}
-<div class="container mx-auto mb-12 text-center">
+<div class="container mx-auto mb-12 text-center px-6">
     <h1 class="uppercase text-4xl text-center border-b-2 pb-4 mb-6">The World from my Point of View</h1>
 
     {{ .Content }}
@@ -27,13 +27,34 @@
     {{ end }}
 </div>
 
-<div class="container mx-auto mb-12 text-center">
+<div class="container mx-auto mb-12 text-center px-6">
     <h1 class="uppercase text-4xl text-center border-b-2 pb-4 mb-6">Some of my favourites</h1>
-    <div class="grid grid-cols-3 gap-4">
-    {{ range .Site.Taxonomies.categories.favorites }}
+    <div class="md:hidden swiper mb-6">
+        <div class="swiper-wrapper">
+            {{ range first 9 .Site.Taxonomies.categories.favorites }}
+            {{ $page := . }}
+            {{ with .Resources.Get .Params.featuredImg }}
+            {{ $imgData := .}}
+            <div class="swiper-slide">
+                {{ $image := $imgData.Fill "700x600"}}
+                <input type="image"
+                    src="{{ $image.RelPermalink }}" 
+                    class="thumbnail w-full max-h-96" 
+                    data-original-src="{{ $imgData.RelPermalink }}">
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+        <div class="swiper-pagination text-doggo-500"></div>
+        <div class="swiper-button-prev text-blueteal-200"></div>
+        <div class="swiper-button-next text-blueteal-200"></div>
+    </div>
+
+    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    {{ range first 9 .Site.Taxonomies.categories.favorites }}
         {{ $page := . }}
-        {{ with .Resources.ByType "image" }}
-        {{ range $imgIdx, $imgData := . }}
+        {{ with .Resources.Get .Params.featuredImg }}
+        {{ $imgData := .}}
         <div class="group flex flex-col justify-center">
             {{ $image := $imgData.Fill "700x600"}}
             <input type="image"
@@ -42,9 +63,9 @@
                 data-original-src="{{ $imgData.RelPermalink }}">
         </div>
         {{ end }}
-        {{ end }}
     {{ end }}
     </div>
+    {{ partial "outline_button.html" (dict "href" .Site.Taxonomies.categories.favorites.Page.RelPermalink "text" "view more" )}}
 </div>
 {{- end }}
 

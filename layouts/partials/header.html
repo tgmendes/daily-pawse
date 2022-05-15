@@ -6,10 +6,10 @@
         <div class="mx-auto px-8 h-full px-20">
             <div class="flex flex-row items-center justify-between h-full">
                 <div class="w-full justify-between flex items-center h-full">
-                    <a class="text-white font-medium py-2" href="/">
-                        <img class="h-16 inline-flex mr-1" src="/dp_logo_white.svg" alt="Workflow" />
+                    <a class="py-2" href="/">
+                        <img class="h-12 md:h-16 inline-flex mr-1" src="/dp_logo_white.svg" alt="Workflow" />
                     </a>
-                    <ul class="ml-10 flex items-baseline space-x-4">
+                    <ul class="hidden md:flex ml-10 items-baseline space-x-4">
                         <li>
                             <a class="{{ if $currentPage.IsHome }}text-doggo-500 border-b-2 border-doggo-500{{ else }}text-gray-300{{ end }}  mx-2 py-2 text-sm font-medium uppercase hover:text-doggo-500  duration-200"
                                 href="/">
@@ -44,8 +44,32 @@
                         
                         {{ end }}
                     </ul>
+                    <button type="button" class="md:hidden" onclick="toggleMobileMenu()">
+                        <i class="fa-solid fa-bars text-white text-4xl"></i>
+                    </button>
                 </div>
             </div>
         </div>
     </nav>
+    <div id="mobileMenu" class="invisible absolute inset-0 -translate-x-full transition-all ease-in-out duration-300 h-screen bg-blueteal-800 px-6 py-12">
+        <button type="button" class="absolute top-6 right-6" onclick="toggleMobileMenu()">
+            <i class="fa-solid fa-xmark text-white text-4xl"></i>
+        </button>
+        <ul class="flex flex-col gap-8 items-center">
+            <li>
+                <a class="{{ if $currentPage.IsHome }}text-doggo-500{{ else }}text-gray-300{{ end }} mx-2 py-2 text-2xl font-medium uppercase hover:text-doggo-500 duration-200"
+                    href="/">
+                    Home
+                </a>
+            </li>
+
+            {{ range .Site.Menus.main }}
+            <li>
+                <a class="text-2xl font-medium uppercase {{ if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }}text-doggo-500{{ else }}text-gray-300{{ end }} hover:text-doggo-500 duration-200" href="{{ .URL }}">
+                    {{ .Name }}
+                </a>
+            </li>
+            {{ end }}
+        </ul>
+    </div>
 </header>

@@ -16,6 +16,7 @@
     </div>
 </body>
 </html>
+<script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
 {{ $jsFiles := resources.Get "js/main.js" }}
 <script src="{{ $jsFiles.RelPermalink }}"></script>
 {{ block "page-script" . }}{{ end }}

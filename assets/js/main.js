@@ -1,7 +1,25 @@
 let imgModal = document.getElementById("imgModal")
 
+const swiper = new Swiper('.swiper', {
+    // Optional parameters
+    direction: 'horizontal',
+    loop: true,
+  
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination',
+    },
+  
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+  
+  });
+
 window.addEventListener('keydown', function (event) {
-    if (imgModal.classList.contains("hidden")) {
+    if (!imgModal || imgModal.classList.contains("hidden")) {
         return
     }
 
@@ -111,17 +129,25 @@ function toggleDropdown(dropdownId) {
 }
 
 // Close the dropdown menu if the user clicks outside of it
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (!event.target.matches('.dropdown-btn') && !event.target.matches('.dropdown-content')) {
-      var dropdowns = document.getElementsByClassName("dropdown-show");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        openDropdown.classList.toggle("dropdown-show")
-        openDropdown.classList.toggle("opacity-0")
-        openDropdown.classList.toggle("scale-50")
-        openDropdown.classList.toggle("opacity-100")
-        openDropdown.classList.toggle("scale-100")
-      }
+        var dropdowns = document.getElementsByClassName("dropdown-show");
+        var i;
+        for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            openDropdown.classList.toggle("dropdown-show")
+            openDropdown.classList.toggle("opacity-0")
+            openDropdown.classList.toggle("scale-50")
+            openDropdown.classList.toggle("opacity-100")
+            openDropdown.classList.toggle("scale-100")
+        }
     }
-  }
+}
+
+function toggleMobileMenu() {
+    menu = document.getElementById('mobileMenu')
+    menu.classList.toggle('invisible')
+    menu.classList.toggle('visible')
+    menu.classList.toggle('-translate-x-full')
+    menu.classList.toggle('translate-x-0')
+}
