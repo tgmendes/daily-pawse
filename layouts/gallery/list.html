@@ -4,7 +4,7 @@
 {{- define "main" -}}
 
 {{.Content}}
-<div class="grid grid-cols-2 gap-12">
+<div class="px-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:gap-12">
     {{ range .Pages }}
     {{ with .Params.coverImg }}
     {{ $image := resources.Get . }}

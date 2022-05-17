@@ -9,7 +9,7 @@
         {{- block "hero" . }}
         
         {{- end }}
-        <main id="content" class="grow mt-12 {{ if not .IsHome }}container mx-auto{{ end }}">
+        <main id="content" class="grow mt-6 mb-6 {{ if not .IsHome }}container mx-auto{{ end }}">
             {{- block "main" . }}{{- end }}
         </main>
         {{- partial "footer.html" . -}}

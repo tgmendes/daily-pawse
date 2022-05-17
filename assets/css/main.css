@@ -17,3 +17,7 @@ html, body {
 .modal-img {
     max-height: calc(100vh - 6rem);
 }
+
+.modalSwiper2 .swiper-slide-thumb-active {
+    opacity: 1;
+  }

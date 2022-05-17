@@ -1,22 +1,21 @@
 let imgModal = document.getElementById("imgModal")
 
-const swiper = new Swiper('.swiper', {
+const indexSwiper = new Swiper('.indexSwiper', {
     // Optional parameters
     direction: 'horizontal',
     loop: true,
-  
+
     // If we need pagination
     pagination: {
-      el: '.swiper-pagination',
+        el: '.swiper-pagination',
     },
-  
+
     // Navigation arrows
     navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
     },
-  
-  });
+});
 
 window.addEventListener('keydown', function (event) {
     if (!imgModal || imgModal.classList.contains("hidden")) {
@@ -36,9 +35,36 @@ window.addEventListener('keydown', function (event) {
     }
 })
 
-function openModal(pageIdx, imgIdx) {
+function openModal(idx) {
+    console.log("init swiper")
+    console.log(idx)
     imgModal.classList.remove("hidden");
-    showSlide(pageIdx, imgIdx)
+
+    const modalSwiper2 = new Swiper(".modalSwiper2", {
+        loop: true,
+        spaceBetween: 10,
+        slidesPerView: 4,
+        freeMode: true,
+        watchSlidesProgress: true,
+        initialSlide: idx,
+    });
+        
+    const modalSwiper1 = new Swiper(".modalSwiper1", {
+        loop: true,
+        spaceBetween: 10,
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        thumbs: {
+            swiper: modalSwiper2,
+        },
+        initialSlide: idx,
+    });
+
+
+    
+    // showSlide(pageIdx, imgIdx)
 }
 
 function closeModal() {

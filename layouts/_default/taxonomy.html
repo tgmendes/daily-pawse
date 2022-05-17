@@ -40,12 +40,12 @@
 .Kind "height" "h-[300px]")}}
 {{- end -}}
 {{- define "main" -}}
-<div class="mb-12 text-center">
-    <h1 class="text-4xl text-center font-bold border-b-2 pb-4 mb-6">{{ .Params.Title }}</h1>
+<div class="mb-6 text-center">
+    <h1 class="text-4xl text-center font-bold border-b-2 pb-4 mb-6 capitalize">{{ .Params.Title }}</h1>
 
     {{ .Content }}
 </div>
-<div class="grid grid-cols-3 gap-3">
+<div class="grid px-6 grid-cols-2 gap-2 md:grid-cols-3 md:gap-3">
     {{ range $pageIdx, $pageData := .Pages }}
     {{ with .Resources.ByType "image" }}
     {{ range $imgIdx, $imgData := . }}

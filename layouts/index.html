@@ -27,9 +27,9 @@
     {{ end }}
 </div>
 
-<div class="container mx-auto mb-12 text-center px-6">
+<div class="container mx-auto mb-6 text-center px-6">
     <h1 class="uppercase text-4xl text-center border-b-2 pb-4 mb-6">Some of my favourites</h1>
-    <div class="md:hidden swiper mb-6">
+    <div class="md:hidden swiper indexSwiper mb-6">
         <div class="swiper-wrapper">
             {{ range first 9 .Site.Taxonomies.categories.favorites }}
             {{ $page := . }}
@@ -50,7 +50,7 @@
         <div class="swiper-button-next text-blueteal-200"></div>
     </div>
 
-    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4">
     {{ range first 9 .Site.Taxonomies.categories.favorites }}
         {{ $page := . }}
         {{ with .Resources.Get .Params.featuredImg }}
