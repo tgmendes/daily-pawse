@@ -36,35 +36,40 @@ window.addEventListener('keydown', function (event) {
 })
 
 function openModal(idx) {
-    console.log("init swiper")
-    console.log(idx)
     imgModal.classList.remove("hidden");
+    var modalSwiper2 = document.querySelector('.modalSwiper2').swiper;
+    if (modalSwiper2 === undefined) {
+        modalSwiper2 = new Swiper(".modalSwiper2", {
+            loop: true,
+            spaceBetween: 10,
+            slidesPerView: 4,
+            freeMode: true,
+            watchSlidesProgress: true,
+            initialSlide: idx,
+        });
+    } else {
+        modalSwiper2.update()
+        modalSwiper2.slideTo(idx+1, 0, false)
+    }
 
-    const modalSwiper2 = new Swiper(".modalSwiper2", {
-        loop: true,
-        spaceBetween: 10,
-        slidesPerView: 4,
-        freeMode: true,
-        watchSlidesProgress: true,
-        initialSlide: idx,
-    });
-        
-    const modalSwiper1 = new Swiper(".modalSwiper1", {
-        loop: true,
-        spaceBetween: 10,
-        navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
-        },
-        thumbs: {
-            swiper: modalSwiper2,
-        },
-        initialSlide: idx,
-    });
-
-
-    
-    // showSlide(pageIdx, imgIdx)
+    var modalSwiper1 = document.querySelector('.modalSwiper1').swiper;
+    if (modalSwiper1 === undefined) {
+        modalSwiper1 = new Swiper(".modalSwiper1", {
+            loop: true,
+            spaceBetween: 10,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            thumbs: {
+                swiper: modalSwiper2,
+            },
+            initialSlide: idx,
+            });
+    } else {
+        modalSwiper1.update()
+        modalSwiper1.slideTo(idx+1, 0, false)
+    }
 }
 
 function closeModal() {
